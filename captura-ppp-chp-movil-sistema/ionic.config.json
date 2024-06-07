@@ -1,0 +1,7 @@
+{
+  "name": "captura-ppp-chp-movil",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
