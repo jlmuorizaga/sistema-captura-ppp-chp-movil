@@ -17,13 +17,16 @@ app.use(cors({
 app.get('/', (request, response) => {
     response.json([{
         info: 'API CHPSystem Captura PPP Móviles'},
-        {tamanios:'/tamanios_pizza'},
+        {dameListaTamaniosPizza:'/dameListaTamaniosPizza'},
         {version:'Version 202406072024'}
     ])
 })
 
-//Endpoints para catálogos
-app.get('/tamanios_pizza', db.getTamaniosPizza);
+//Endpoints para tamanio_pizza
+app.get('/dameListaTamaniosPizza', db.getListaTamaniosPizza);
+app.post('/insertaTamanioPizza/:idTamanio/:nuevoTamanio', db.insertaTamanioPizza);
+app.put('/actualizaTamanioPizza/:idTamanioPizza/:nombreTamanioPizza', db.actualizaTamanioPizza);
+app.delete('/eliminaTamanioPizza/:idTamanioPizza', db.eliminaTamanioPizza);
 
 
 app.listen(port, () => {

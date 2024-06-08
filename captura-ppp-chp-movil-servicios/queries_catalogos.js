@@ -7,6 +7,8 @@ const DB_USER = process.env.DB_USER || 'cheesepizzauser';
 const DB_PASSWORD = process.env.DB_PASSWORD || 'cheesepizza2001';
 const DB_NAME = process.env.DB_NAME || 'chppreciosespecprodpromocdb';
 //const DB_PORT = process.env.DB_PORT || 5432;
+
+//Laptop Omen
 const DB_PORT = process.env.DB_PORT || 5434;
 
 //Pool de conexiones a base de datos
@@ -22,7 +24,7 @@ const pool = new Pool({
 });
 
 
-const getTamaniosPizza = (request, response) => {
+const getListaTamaniosPizza = (request, response) => {
     pool.query(
         'SELECT id, nombre FROM preesppropro.tamanio_pizza ORDER BY nombre',
         (error, results) => {
@@ -33,7 +35,55 @@ const getTamaniosPizza = (request, response) => {
         }
     );
 }
+const insertaTamanioPizza = (req, res) => {
+    const { idTamanio, nuevoTamanio } = req.body;
+    pool.query(
+        'INSERT INTO preesppropro.tamanio_pizza(id, nombre) ' 
+        +'VALUES ($1, $2) RETURNING *',
+        [idTamanio,nuevoTamanio],
+        (error, results) => {
+            if (error) {
+                throw error;
+            }
+            textoRespuesta = '{"respuesta": "Se insertó nuevo tamaño pizza: ' + results.rows[0].id + '"}';
+            res.status(201).json(JSON.parse(textoRespuesta));
+        }
+    );
+}
+
+const actualizaTamanioPizza = (req, res) => {
+    const { idTamanioPizza, nombreTamanioPizza } = req.body;
+    pool.query(
+        'UPDATE preesppropro.tamanio_pizza SET nombre=$1 WHERE id=$2 RETURNING *',
+        [nombreTamanioPizza, idTamanioPizza],
+        (error, results) => {
+            if (error) {
+                throw error;
+            }
+            textoRespuesta = '{"respuesta": "Se actualizó domicilio: ' + results.rows[0].id + '"}';
+            res.status(201).json(JSON.parse(textoRespuesta));
+        }
+    );
+}
+
+const eliminaTamanioPizza = (req, res) => {
+    const idTamanioPizza = req.params.idTamanioPizza;
+    pool.query(
+        'DELETE FROM preesppropro.tamanio_pizza WHERE id=$1 ',
+        [idTamanioPizza],
+        (error, results) => {
+            if (error) {
+                throw error;
+            }
+            textoRespuesta = '{"respuesta": "Se eliminó ' + results.rowCount + ' tamanio_pizza: ' + id + '"}';
+            res.status(201).json(JSON.parse(textoRespuesta));
+        }
+    );
+}
 
 module.exports = {
-    getTamaniosPizza
+    getListaTamaniosPizza,
+    insertaTamanioPizza,
+    actualizaTamanioPizza,
+    eliminaTamanioPizza
 }
