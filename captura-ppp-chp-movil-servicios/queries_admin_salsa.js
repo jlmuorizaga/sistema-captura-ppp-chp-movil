@@ -6,10 +6,11 @@ const DB_HOST = process.env.DB_HOST || 'localhost';
 const DB_USER = process.env.DB_USER || 'cheesepizzauser';
 const DB_PASSWORD = process.env.DB_PASSWORD || 'cheesepizza2001';
 const DB_NAME = process.env.DB_NAME || 'chppreciosespecprodpromocdb';
-//const DB_PORT = process.env.DB_PORT || 5432;
+//MacBook
+const DB_PORT = process.env.DB_PORT || 5432;
 
 //Laptop Omen
-const DB_PORT = process.env.DB_PORT || 5434;
+//const DB_PORT = process.env.DB_PORT || 5434;
 
 //Pool de conexiones a base de datos
 const pool = new Pool({
@@ -24,9 +25,9 @@ const pool = new Pool({
 });
 
 
-const getListaTamaniosPizza = (request, response) => {
+const getListaSalsas = (request, response) => {
     pool.query(
-        'SELECT id, nombre FROM preesppropro.tamanio_pizza ORDER BY nombre',
+        'SELECT id, descripcion FROM preesppropro.salsa ORDER BY descripcion',
         (error, results) => {
             if (error) {
                 throw error;
@@ -35,12 +36,25 @@ const getListaTamaniosPizza = (request, response) => {
         }
     );
 }
-const insertaTamanioPizza = (req, res) => {
-    const { idTamanio, nuevoTamanio } = req.body;
+const getSalsa= (request, response) => {
+    const idTamanio = request.params.idTamanio;
     pool.query(
-        'INSERT INTO preesppropro.tamanio_pizza(id, nombre) ' 
+        'SELECT id, descripcion FROM preesppropro.salsa WHERE id=$1 ORDER BY descripcion',
+        [idTamanio],
+        (error, results) => {
+            if (error) {
+                throw error;
+            }
+            response.status(200).json(results.rows[0]);
+        }
+    );
+}
+const insertaSalsa = (req, res) => {
+    const { idSalsa, nombreSalsa } = req.body;
+    pool.query(
+        'INSERT INTO preesppropro.salsa(id, descripcion) ' 
         +'VALUES ($1, $2) RETURNING *',
-        [idTamanio,nuevoTamanio],
+        [idSalsa,nombreSalsa],
         (error, results) => {
             if (error) {
                 throw error;
@@ -51,39 +65,41 @@ const insertaTamanioPizza = (req, res) => {
     );
 }
 
-const actualizaTamanioPizza = (req, res) => {
-    const { idTamanioPizza, nombreTamanioPizza } = req.body;
+const actualizaSalsa= (req, res) => {
+    const idSalsa = req.params.idSalsa;
+    const { nombreSalsa } = req.body;
     pool.query(
-        'UPDATE preesppropro.tamanio_pizza SET nombre=$1 WHERE id=$2 RETURNING *',
-        [nombreTamanioPizza, idTamanioPizza],
+        'UPDATE preesppropro.salsa SET descripcion=$1 WHERE id=$2 RETURNING *',
+        [idSalsa, nombreSalsa],
         (error, results) => {
             if (error) {
                 throw error;
             }
-            textoRespuesta = '{"respuesta": "Se actualizó domicilio: ' + results.rows[0].id + '"}';
+            textoRespuesta = '{"respuesta": "Se actualizó tamaño_pizza: ' + results.rows[0].id + '"}';
             res.status(201).json(JSON.parse(textoRespuesta));
         }
     );
 }
 
-const eliminaTamanioPizza = (req, res) => {
-    const idTamanioPizza = req.params.idTamanioPizza;
+const eliminaSalsa = (req, res) => {
+    const idSalsa = req.params.idSalsa;
     pool.query(
-        'DELETE FROM preesppropro.tamanio_pizza WHERE id=$1 ',
-        [idTamanioPizza],
+        'DELETE FROM preesppropro.salsa WHERE id=$1 ',
+        [idSalsa],
         (error, results) => {
             if (error) {
                 throw error;
             }
-            textoRespuesta = '{"respuesta": "Se eliminó ' + results.rowCount + ' tamanio_pizza: ' + id + '"}';
+            textoRespuesta = '{"respuesta": "Se eliminó ' + results.rowCount + ' tamanio_pizza: ' + idSalsa + '"}';
             res.status(201).json(JSON.parse(textoRespuesta));
         }
     );
 }
 
 module.exports = {
-    getListaTamaniosPizza,
-    insertaTamanioPizza,
-    actualizaTamanioPizza,
-    eliminaTamanioPizza
+    getListaSalsas,
+    getSalsa,
+    insertaSalsa,
+    actualizaSalsa,
+    eliminaSalsa
 }
