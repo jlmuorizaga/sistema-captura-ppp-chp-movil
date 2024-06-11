@@ -10,10 +10,10 @@ const pool = new Pool({
     database: DB_NAME,
     password: DB_PASSWORD,
     port: DB_PORT,
-    ssl: {
+ /*   ssl: {
         rejectUnauthorized: false,
     },
-
+*/
 });
 
 
@@ -29,10 +29,10 @@ const getListaSalsas = (request, response) => {
     );
 }
 const getSalsa= (request, response) => {
-    const idTamanio = request.params.idTamanio;
+    const idSalsa = request.params.idTamanio;
     pool.query(
         'SELECT id, descripcion FROM preesppropro.salsa WHERE id=$1 ORDER BY descripcion',
-        [idTamanio],
+        [idSalsa],
         (error, results) => {
             if (error) {
                 throw error;
@@ -51,7 +51,7 @@ const insertaSalsa = (req, res) => {
             if (error) {
                 throw error;
             }
-            textoRespuesta = '{"respuesta": "Se insertó nuevo tamaño pizza: ' + results.rows[0].id + '"}';
+            textoRespuesta = '{"respuesta": "Se insertó nueva salsa: ' + results.rows[0].id + '"}';
             res.status(201).json(JSON.parse(textoRespuesta));
         }
     );
@@ -67,7 +67,7 @@ const actualizaSalsa= (req, res) => {
             if (error) {
                 throw error;
             }
-            textoRespuesta = '{"respuesta": "Se actualizó tamaño_pizza: ' + results.rows[0].id + '"}';
+            textoRespuesta = '{"respuesta": "Se actualizó salsa: ' + results.rows[0].id + '"}';
             res.status(201).json(JSON.parse(textoRespuesta));
         }
     );
@@ -82,7 +82,7 @@ const eliminaSalsa = (req, res) => {
             if (error) {
                 throw error;
             }
-            textoRespuesta = '{"respuesta": "Se eliminó ' + results.rowCount + ' tamanio_pizza: ' + idSalsa + '"}';
+            textoRespuesta = '{"respuesta": "Se eliminó ' + results.rowCount + ' salsa: ' + idSalsa + '"}';
             res.status(201).json(JSON.parse(textoRespuesta));
         }
     );
