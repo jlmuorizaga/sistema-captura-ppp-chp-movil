@@ -2,11 +2,6 @@ const Pool = require('pg').Pool;
 
 const {DB_HOST,DB_USER,DB_PASSWORD,DB_NAME,DB_PORT} = require('./conexion_data_db.js')
 
-//MacBook
-const DB_PORT = process.env.DB_PORT || 5432;
-
-//Laptop Omen
-//const DB_PORT = process.env.DB_PORT || 5434;
 
 //Pool de conexiones a base de datos
 const pool = new Pool({
