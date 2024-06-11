@@ -1,4 +1,3 @@
-const Pool = require('pg').Pool;
 const DB_HOST = process.env.DB_HOST || 'database-1.cgujpjkz4fsl.us-west-1.rds.amazonaws.com';
  //const DB_HOST = process.env.DB_HOST || 'localhost';
  const DB_USER = process.env.DB_USER || 'cheesepizzauser';
