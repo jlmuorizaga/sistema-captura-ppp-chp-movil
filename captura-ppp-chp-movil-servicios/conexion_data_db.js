@@ -5,7 +5,7 @@
  const DB_NAME = process.env.DB_NAME || 'chppreciosespecprodpromocdb';
  
  //AWS
- //const DB_PORT = process.env.DB_PORT || 5432;
+ const DB_PORT = process.env.DB_PORT || 5432;
 
  //MacBook
  //const DB_PORT = process.env.DB_PORT || 5432;
@@ -14,7 +14,7 @@
 //const DB_PORT = process.env.DB_PORT || 5434;
 
 //Desktop INEGI
-const DB_PORT = process.env.DB_PORT || 5433;
+//const DB_PORT = process.env.DB_PORT || 5433;
 
  module.exports={
     DB_HOST, DB_USER,DB_PASSWORD, DB_NAME,DB_PORT
