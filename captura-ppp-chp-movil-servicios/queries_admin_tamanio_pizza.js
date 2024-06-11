@@ -1,17 +1,13 @@
 const Pool = require('pg').Pool;
 
 //Datos de conexión a base de datos en AWS
-const DB_HOST = process.env.DB_HOST || 'database-1.cgujpjkz4fsl.us-west-1.rds.amazonaws.com';
+//const DB_HOST = process.env.DB_HOST || 'database-1.cgujpjkz4fsl.us-west-1.rds.amazonaws.com';
 //const DB_HOST = process.env.DB_HOST || 'localhost';
-const DB_USER = process.env.DB_USER || 'cheesepizzauser';
-const DB_PASSWORD = process.env.DB_PASSWORD || 'cheesepizza2001';
-const DB_NAME = process.env.DB_NAME || 'chppreciosespecprodpromocdb';
-//MacBook
-const DB_PORT = process.env.DB_PORT || 5432;
+//import {DB_HOST} from './conexion_data_dbconexion';
+const {DB_HOST,DB_USER,DB_PASSWORD,DB_NAME,DB_PORT} = require('./conexion_data_db.js')
 
-//Laptop Omen
-//const DB_PORT = process.env.DB_PORT || 5434;
-
+console.log('db_host='+DB_HOST);
+console.log('db_user='+DB_USER);
 //Pool de conexiones a base de datos
 const pool = new Pool({
     user: DB_USER,

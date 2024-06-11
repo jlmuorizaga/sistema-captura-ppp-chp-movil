@@ -18,7 +18,7 @@ app.use(cors({
 app.get('/', (request, response) => {
     response.json([{
         info: 'API CHPSystem Captura PPP Móviles'},
-        {dameListaTamaniosPizza:'/dameListaTamaniosPizza'},
+        {dameListaTamaniosPizza:'/tamanios-pizza'},
         {version:'Version 202406072024'}
     ])
 })
