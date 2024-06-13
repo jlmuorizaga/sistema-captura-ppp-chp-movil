@@ -25,7 +25,7 @@ app.get('/', (request, response) => {
 
 //Endpoints para tamanio_pizza
 app.get('/tamanios-pizza', db_tp.getListaTamaniosPizza);
-app.get('/tamanios-pizza/:idTamanio', db_tp.getTamanioPizza);
+app.get('/tamanios-pizza/:idTamanioPizza', db_tp.getTamanioPizza);
 app.post('/tamanios-pizza', db_tp.insertaTamanioPizza);
 app.put('/tamanios-pizza/:idTamanioPizza', db_tp.actualizaTamanioPizza);
 app.delete('/tamanios-pizza/:idTamanioPizza', db_tp.eliminaTamanioPizza);

@@ -29,7 +29,7 @@ const getListaSalsas = (request, response) => {
     );
 }
 const getSalsa= (request, response) => {
-    const idSalsa = request.params.idTamanio;
+    const idSalsa = request.params.idSalsa;
     pool.query(
         'SELECT id, descripcion FROM preesppropro.salsa WHERE id=$1 ORDER BY descripcion',
         [idSalsa],
@@ -62,7 +62,7 @@ const actualizaSalsa= (req, res) => {
     const { nombreSalsa } = req.body;
     pool.query(
         'UPDATE preesppropro.salsa SET descripcion=$1 WHERE id=$2 RETURNING *',
-        [idSalsa, nombreSalsa],
+        [nombreSalsa,idSalsa],
         (error, results) => {
             if (error) {
                 throw error;

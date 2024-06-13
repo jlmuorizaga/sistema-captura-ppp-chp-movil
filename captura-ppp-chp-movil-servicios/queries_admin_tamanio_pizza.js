@@ -15,9 +15,9 @@ const pool = new Pool({
     database: DB_NAME,
     password: DB_PASSWORD,
     port: DB_PORT,
-    ssl: {
+  /*  ssl: {
         rejectUnauthorized: false,
-    },
+    },*/
 });
 
 
@@ -33,10 +33,10 @@ const getListaTamaniosPizza = (request, response) => {
     );
 }
 const getTamanioPizza= (request, response) => {
-    const idTamanio = request.params.idTamanio;
+    const idTamanioPizza = request.params.idTamanioPizza;
     pool.query(
         'SELECT id, nombre FROM preesppropro.tamanio_pizza WHERE id=$1 ORDER BY nombre',
-        [idTamanio],
+        [idTamanioPizza],
         (error, results) => {
             if (error) {
                 throw error;
@@ -46,11 +46,11 @@ const getTamanioPizza= (request, response) => {
     );
 }
 const insertaTamanioPizza = (req, res) => {
-    const { idTamanio, nombreTamanioPizza } = req.body;
+    const { idTamanioPizza, nombreTamanioPizza } = req.body;
     pool.query(
         'INSERT INTO preesppropro.tamanio_pizza(id, nombre) ' 
         +'VALUES ($1, $2) RETURNING *',
-        [idTamanio,nombreTamanioPizza],
+        [idTamanioPizza,nombreTamanioPizza],
         (error, results) => {
             if (error) {
                 throw error;
