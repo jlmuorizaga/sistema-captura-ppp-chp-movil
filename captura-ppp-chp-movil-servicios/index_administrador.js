@@ -4,6 +4,9 @@ const bodyParser = require('body-parser')
 const app = express()
 const db_tp = require('./queries_admin_tamanio_pizza')
 const db_s=require('./queries_admin_salsa')
+const db_e=require('./queries_admin_especialidad_pizza')
+const db_tipos_producto=require('./queries_admin_tipos_producto')
+const db_producto=require('./queries_admin_producto')
 const port = process.env.PORT || 3005
 
 app.use(bodyParser.json())
@@ -36,6 +39,27 @@ app.get('/salsas/:idSalsa', db_s.getSalsa);
 app.post('/salsas', db_s.insertaSalsa);
 app.put('/salsas/:idSalsa', db_s.actualizaSalsa);
 app.delete('/salsas/:idSalsa', db_s.eliminaSalsa);
+
+//Endpoints para especialidades
+app.get('/especialidades', db_e.getListaEspecialidades);
+app.get('/especialidades/:idEspecialidad', db_e.getEspecialidad);
+app.post('/especialidades', db_e.insertaEspecialidad);
+app.put('/especialidades/:idEspecialidad', db_e.actualizaEspecialidad);
+app.delete('/especialidades/:idEspecialidad', db_e.eliminaEspecialidad);
+
+//Endpoints para tipos_producto
+app.get('/tipos-producto', db_tipos_producto.getListaTiposProducto);
+app.get('/tipos-producto/:idTipoProducto', db_tipos_producto.getTipoProducto);
+app.post('/tipos-producto', db_tipos_producto.insertaTipoProducto);
+app.put('/tipos-producto/:idTipoProducto', db_tipos_producto.actualizaTipoProducto);
+app.delete('/tipos-producto/:idTipoProducto', db_tipos_producto.eliminaTipoProducto);
+
+//Endpoints para tipos_producto
+app.get('/productos', db_producto.getListaProducto);
+app.get('/productos/:idProducto', db_producto.getProducto);
+app.post('/productos', db_producto.insertaProducto);
+app.put('/productos/:idProducto', db_producto.actualizaProducto);
+app.delete('/productos/:idProducto', db_producto.eliminaProducto);
 
 
 app.listen(port, () => {
