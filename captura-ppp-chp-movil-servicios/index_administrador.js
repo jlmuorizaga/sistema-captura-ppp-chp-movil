@@ -54,7 +54,7 @@ app.post('/tipos-producto', db_tipos_producto.insertaTipoProducto);
 app.put('/tipos-producto/:idTipoProducto', db_tipos_producto.actualizaTipoProducto);
 app.delete('/tipos-producto/:idTipoProducto', db_tipos_producto.eliminaTipoProducto);
 
-//Endpoints para tipos_producto
+//Endpoints para productos
 app.get('/productos', db_producto.getListaProducto);
 app.get('/productos/:idProducto', db_producto.getProducto);
 app.post('/productos', db_producto.insertaProducto);
