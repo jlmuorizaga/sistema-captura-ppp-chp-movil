@@ -45,11 +45,10 @@ const getProducto= (request, response) => {
 }
 const insertaProducto = (req, res) => {
     const { id, descripcion,  tamanio, usa_salsa, id_tipo_producto, ruta_imagen} = req.body;
-    console.log('img_url='+img_url);
     pool.query(
         'INSERT INTO preesppropro.producto(id, descripcion, tamanio, usa_salsa, id_tipo_producto, ruta_imagen) '
         +'VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-        [id,descripcion,img_url],
+        [id,descripcion,tamanio, usa_salsa, id_tipo_producto, ruta_imagen],
         (error, results) => {
             if (error) {
                 throw error;
@@ -66,7 +65,7 @@ const actualizaProducto= (req, res) => {
     pool.query(
         'UPDATE preesppropro.producto SET descripcion=$1, tamanio=$2, usa_salsa=$3, '
         +'id_tipo_producto=$4, ruta_imagen=$5 WHERE id=$6 RETURNING *',
-        [descripcion, tamanio, usa_salsa, id_tipo_producto, ruta_imagen],
+        [descripcion, tamanio, usa_salsa, id_tipo_producto, ruta_imagen,idProducto],
         (error, results) => {
             if (error) {
                 throw error;
