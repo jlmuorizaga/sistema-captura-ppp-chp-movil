@@ -7,6 +7,7 @@ const db_s=require('./queries_admin_salsa')
 const db_e=require('./queries_admin_especialidad_pizza')
 const db_tipos_producto=require('./queries_admin_tipos_producto')
 const db_producto=require('./queries_admin_producto')
+const db_retps=require('./queries_admin_relacion_especialidad_tamanio_precio_sucursal')
 const port = process.env.PORT || 3005
 
 app.use(bodyParser.json())
@@ -61,6 +62,12 @@ app.post('/productos', db_producto.insertaProducto);
 app.put('/productos/:idProducto', db_producto.actualizaProducto);
 app.delete('/productos/:idProducto', db_producto.eliminaProducto);
 
+//Endpoints para relacion_especialidad_tamanio_precio_sucursal
+app.get('/relacion_especialidad_tamanio_precio_sucursal/:idSucursal', db_retps.getListaRelacionEspecialidadTamanioPrecioSucursal);
+app.get('/productos/:idProducto', db_producto.getProducto);
+app.post('/productos', db_producto.insertaProducto);
+app.put('/productos/:idProducto', db_producto.actualizaProducto);
+app.delete('/productos/:idProducto', db_producto.eliminaProducto);
 
 app.listen(port, () => {
     console.log('API CHPSystem Captura PPP Móviles Nube corriendo en puerto', port);
