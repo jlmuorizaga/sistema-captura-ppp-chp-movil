@@ -26,7 +26,7 @@ const getListaRelacionEspecialidadTamanioPrecioSucursal = (request, response) =>
                 + 'id_tamanio_pizza as idTamanioPizza, tp.nombre as pizzaTamanio,id_sucursal as idSucursal, precio,precio_p1 as precioP1,'
                 + 'r.aplica_2x1 as aplica2x1, r.aplica_p1 as aplicaP1,r.aplica_bebida_chica_gratis as aplicaBebidaChicaGratis '
                 + 'FROM preesppropro.relacion_especialidad_tamanio_precio_sucursal r,preesppropro.especialidad_pizza ep,preesppropro.tamanio_pizza tp '
-                + "WHERE id_sucursal LIKE '%00CHP20201201191758267208241%' "
+                + 'WHERE id_sucursal=$1 '
                 + 'AND id_especialidad_pizza=ep.id AND id_tamanio_pizza=tp.id '
                 + 'ORDER BY pizzaNombre, pizzaTamanio',
                 [idSucursal],
