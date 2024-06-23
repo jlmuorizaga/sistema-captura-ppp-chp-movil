@@ -64,7 +64,8 @@ app.delete('/productos/:idProducto', db_producto.eliminaProducto);
 
 //Endpoints para relacion_especialidad_tamanio_precio_sucursal
 app.get('/relacion_especialidad_tamanio_precio_sucursal/:idSucursal', db_retps.getListaRelacionEspecialidadTamanioPrecioSucursal);
-app.get('/productos/:idProducto', db_producto.getProducto);
+app.get('/relacion_especialidad_tamanio_precio_sucursal/:idEspecialidad/:idTamanio/:idSucursal', db_retps.getRelacionEspecialidadTamanioPrecioSucursal);
+app.post('/relacion_especialidad_tamanio_precio_sucursal', db_retps.insertaRelacionEspecialidadTamanioPrecioSucursal);
 app.post('/productos', db_producto.insertaProducto);
 app.put('/productos/:idProducto', db_producto.actualizaProducto);
 app.delete('/productos/:idProducto', db_producto.eliminaProducto);
