@@ -42,9 +42,6 @@ const getRelacionEspecialidadTamanioPrecioSucursal = (request, response) => {
     const idEspecialidad = request.params.idEspecialidad;
     const idTamanio = request.params.idTamanio;
     const idSucursal = request.params.idSucursal;
-    console.log('idEspecialidad='+idEspecialidad);
-    console.log('idTamanio='+idTamanio);
-    console.log('idSucursal='+idSucursal);
     pool.query(
         'SELECT id_especialidad_pizza as idEspecialidad, ep.nombre as pizzaNombre,'
                 + 'id_tamanio_pizza as idTamanioPizza, tp.nombre as pizzaTamanio,id_sucursal as idSucursal, precio,precio_p1 as precioP1,'
@@ -62,8 +59,37 @@ const getRelacionEspecialidadTamanioPrecioSucursal = (request, response) => {
         }
     );
 }
-const insertaRelacionEspecialidadTamanioPrecioSucursal = (req, res) => {
-    const { idEspecialidad, idTamanio,idSucursal,precio,preciop1,aplica2x1,aplicap1,aplicabebidachicagratis } = req.body;
+const insertaRelacionEspecialidadTamanioPrecioSucursal = (request, response) => {
+    const { idEspecialidad, idTamanio,idSucursal,precio,preciop1,aplica2x1,aplicap1,aplicabebidachicagratis } = request.body;
+/*    console.log('idEspecialidad='+idEspecialidad);
+    console.log('idTamanio='+idTamanio);
+    console.log('idSucursal='+idSucursal);
+    console.log('precio='+precio);
+    console.log('preciop1='+preciop1);
+    console.log('aplica2x1='+aplica2x1);
+    console.log('aplicap1='+aplicap1);
+    console.log('aplicabebidachicagratis='+aplicabebidachicagratis);
+    */
+   pool.query(
+        'INSERT INTO preesppropro.relacion_especialidad_tamanio_precio_sucursal(id_especialidad_pizza,'
+        +'id_tamanio_pizza, id_sucursal, precio,precio_p1,aplica_2x1,aplica_p1,aplica_bebida_chica_gratis) '
+        +'VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;',
+        [idEspecialidad,idTamanio,idSucursal,precio,preciop1,aplica2x1,aplicap1,aplicabebidachicagratis],
+        (error, results) => {
+            if (error) {
+                throw error;
+            }
+            textoRespuesta = '{"respuesta": "Se insertó nuevo registro relacion_especialidad_tamanio_precio_sucursal: ' + results.rows[0].id + '"}';
+            response.status(201).json(JSON.parse(textoRespuesta));
+        }
+    );
+}
+
+const actualizaRelacionEspecialidadTamanioPrecioSucursal= (request, response) => {
+    const idEspecialidad = request.params.idEspecialidad;
+    const idTamanio = request.params.idTamanio;
+    const idSucursal = request.params.idSucursal;    
+    const {precio,preciop1,aplica2x1,aplicap1,aplicabebidachicagratis } = request.body;
     console.log('idEspecialidad='+idEspecialidad);
     console.log('idTamanio='+idTamanio);
     console.log('idSucursal='+idSucursal);
@@ -72,48 +98,37 @@ const insertaRelacionEspecialidadTamanioPrecioSucursal = (req, res) => {
     console.log('aplica2x1='+aplica2x1);
     console.log('aplicap1='+aplicap1);
     console.log('aplicabebidachicagratis='+aplicabebidachicagratis);
+
     pool.query(
-        'INSERT INTO preesppropro.relacion_especialidad_tamanio_precio_sucursal(id_especialidad_pizza,'
-        +'id_tamanio_pizza, id_sucursal, precio,precio_p1,aplica_2x1,aplica_p1,aplica_bebida_chica_gratis) '
-        +'VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;'
+        'UPDATE preesppropro.relacion_especialidad_tamanio_precio_sucursal '
+        +'SET id_especialidad_pizza=$1, id_tamanio_pizza=$2, id_sucursal=$3, precio=$4, '
+        +'precio_p1=$5, aplica_2x1=$6, aplica_p1=$7, aplica_bebida_chica_gratis=$8  '
+        + 'WHERE id_especialidad_pizza=$1 and id_tamanio_pizza=$2 and id_sucursal=$3 ',
+        
         [idEspecialidad,idTamanio,idSucursal,precio,preciop1,aplica2x1,aplicap1,aplicabebidachicagratis],
         (error, results) => {
             if (error) {
                 throw error;
             }
-            textoRespuesta = '{"respuesta": "Se insertó nuevo registro relacion_especialidad_tamanio_precio_sucursal: ' + results.rows[0].id + '"}';
-            res.status(201).json(JSON.parse(textoRespuesta));
+            textoRespuesta = '{"respuesta": "relacion_especialidad_tamanio_precio_sucursal: ' + results.rows[0].id + '"}';
+            response.status(201).json(JSON.parse(textoRespuesta));
         }
     );
 }
 
-const actualizaSalsa= (req, res) => {
-    const idSalsa = req.params.idSalsa;
-    const { nombreSalsa } = req.body;
+const eliminaRelacionEspecialidadTamanioPrecioSucursal = (request, response) => {
+    const idEspecialidad = request.params.idEspecialidad;
+    const idTamanio = request.params.idTamanio;
+    const idSucursal = request.params.idSucursal;
     pool.query(
-        'UPDATE preesppropro.salsa SET descripcion=$1 WHERE id=$2 RETURNING *',
-        [nombreSalsa,idSalsa],
+        'DELETE FROM preesppropro.relacion_especialidad_tamanio_precio_sucursal WHERE id_especialidad_pizza=$1 and id_tamanio_pizza=$2 and id_sucursal=$3 ',
+        [idEspecialidad,idTamanio,idSucursal],
         (error, results) => {
             if (error) {
                 throw error;
             }
-            textoRespuesta = '{"respuesta": "Se actualizó salsa: ' + results.rows[0].id + '"}';
-            res.status(201).json(JSON.parse(textoRespuesta));
-        }
-    );
-}
-
-const eliminaSalsa = (req, res) => {
-    const idSalsa = req.params.idSalsa;
-    pool.query(
-        'DELETE FROM preesppropro.salsa WHERE id=$1 ',
-        [idSalsa],
-        (error, results) => {
-            if (error) {
-                throw error;
-            }
-            textoRespuesta = '{"respuesta": "Se eliminó ' + results.rowCount + ' salsa: ' + idSalsa + '"}';
-            res.status(201).json(JSON.parse(textoRespuesta));
+            textoRespuesta = '{"respuesta": "Se eliminó ' + results.rowCount + ' relacion_especialidad_tamanio_precio_sucursal: ' + idEspecialidad + '"}';
+            response.status(201).json(JSON.parse(textoRespuesta));
         }
     );
 }
@@ -122,6 +137,6 @@ module.exports = {
     getListaRelacionEspecialidadTamanioPrecioSucursal,
     getRelacionEspecialidadTamanioPrecioSucursal,
     insertaRelacionEspecialidadTamanioPrecioSucursal,
-    actualizaSalsa,
-    eliminaSalsa
+    actualizaRelacionEspecialidadTamanioPrecioSucursal,
+    eliminaRelacionEspecialidadTamanioPrecioSucursal
 }

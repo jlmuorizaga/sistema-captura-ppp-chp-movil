@@ -66,9 +66,8 @@ app.delete('/productos/:idProducto', db_producto.eliminaProducto);
 app.get('/relacion_especialidad_tamanio_precio_sucursal/:idSucursal', db_retps.getListaRelacionEspecialidadTamanioPrecioSucursal);
 app.get('/relacion_especialidad_tamanio_precio_sucursal/:idEspecialidad/:idTamanio/:idSucursal', db_retps.getRelacionEspecialidadTamanioPrecioSucursal);
 app.post('/relacion_especialidad_tamanio_precio_sucursal', db_retps.insertaRelacionEspecialidadTamanioPrecioSucursal);
-app.post('/productos', db_producto.insertaProducto);
-app.put('/productos/:idProducto', db_producto.actualizaProducto);
-app.delete('/productos/:idProducto', db_producto.eliminaProducto);
+app.put('/relacion_especialidad_tamanio_precio_sucursal/:idEspecialidad/:idTamanio/:idSucursal', db_retps.actualizaRelacionEspecialidadTamanioPrecioSucursal);
+app.delete('/relacion_especialidad_tamanio_precio_sucursal/:idEspecialidad/:idTamanio/:idSucursal', db_retps.eliminaRelacionEspecialidadTamanioPrecioSucursal);
 
 app.listen(port, () => {
     console.log('API CHPSystem Captura PPP Móviles Nube corriendo en puerto', port);
