@@ -8,6 +8,7 @@ const db_e=require('./queries_admin_especialidad_pizza')
 const db_tipos_producto=require('./queries_admin_tipos_producto')
 const db_producto=require('./queries_admin_producto')
 const db_retps=require('./queries_admin_relacion_especialidad_tamanio_precio_sucursal')
+const db_lugar=require('./queries_admin_lugar')
 const port = process.env.PORT || 3005
 
 app.use(bodyParser.json())
@@ -68,6 +69,13 @@ app.get('/relacion_especialidad_tamanio_precio_sucursal/:idEspecialidad/:idTaman
 app.post('/relacion_especialidad_tamanio_precio_sucursal', db_retps.insertaRelacionEspecialidadTamanioPrecioSucursal);
 app.put('/relacion_especialidad_tamanio_precio_sucursal/:idEspecialidad/:idTamanio/:idSucursal', db_retps.actualizaRelacionEspecialidadTamanioPrecioSucursal);
 app.delete('/relacion_especialidad_tamanio_precio_sucursal/:idEspecialidad/:idTamanio/:idSucursal', db_retps.eliminaRelacionEspecialidadTamanioPrecioSucursal);
+
+//Endpoints para lugar
+app.get('/lugares', db_lugar.getListaLugares);
+app.get('/lugares/:idLugar', db_lugar.getLugar);
+app.post('/lugares', db_lugar.insertaLugar);
+app.put('/lugares/:idLugar', db_lugar.actualizaLugar);
+app.delete('/lugares/:idLugar', db_lugar.eliminaLugar);
 
 app.listen(port, () => {
     console.log('API CHPSystem Captura PPP Móviles Nube corriendo en puerto', port);

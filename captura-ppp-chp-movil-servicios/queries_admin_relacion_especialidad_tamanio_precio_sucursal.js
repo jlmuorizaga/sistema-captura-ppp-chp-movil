@@ -90,6 +90,7 @@ const actualizaRelacionEspecialidadTamanioPrecioSucursal= (request, response) =>
     const idTamanio = request.params.idTamanio;
     const idSucursal = request.params.idSucursal;    
     const {precio,preciop1,aplica2x1,aplicap1,aplicabebidachicagratis } = request.body;
+    
     console.log('idEspecialidad='+idEspecialidad);
     console.log('idTamanio='+idTamanio);
     console.log('idSucursal='+idSucursal);
@@ -103,14 +104,14 @@ const actualizaRelacionEspecialidadTamanioPrecioSucursal= (request, response) =>
         'UPDATE preesppropro.relacion_especialidad_tamanio_precio_sucursal '
         +'SET id_especialidad_pizza=$1, id_tamanio_pizza=$2, id_sucursal=$3, precio=$4, '
         +'precio_p1=$5, aplica_2x1=$6, aplica_p1=$7, aplica_bebida_chica_gratis=$8  '
-        + 'WHERE id_especialidad_pizza=$1 and id_tamanio_pizza=$2 and id_sucursal=$3 ',
+        + 'WHERE id_especialidad_pizza=$1 and id_tamanio_pizza=$2 and id_sucursal=$3 RETURNING *',
         
         [idEspecialidad,idTamanio,idSucursal,precio,preciop1,aplica2x1,aplicap1,aplicabebidachicagratis],
         (error, results) => {
             if (error) {
                 throw error;
             }
-            textoRespuesta = '{"respuesta": "relacion_especialidad_tamanio_precio_sucursal: ' + results.rows[0].id + '"}';
+            textoRespuesta = '{"respuesta": "Se actualizó relacion_especialidad_tamanio_precio_sucursal: ' + results.rows[0].id_especialidad_pizza + '"}';
             response.status(201).json(JSON.parse(textoRespuesta));
         }
     );
