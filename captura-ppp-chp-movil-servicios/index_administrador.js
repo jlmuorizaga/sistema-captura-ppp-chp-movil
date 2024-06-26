@@ -8,6 +8,7 @@ const db_e=require('./queries_admin_especialidad_pizza')
 const db_tipos_producto=require('./queries_admin_tipos_producto')
 const db_producto=require('./queries_admin_producto')
 const db_retps=require('./queries_admin_relacion_especialidad_tamanio_precio_sucursal')
+const db_rpps=require('./queries_admin_relacion_producto_precio_sucursal')
 const db_lugar=require('./queries_admin_lugar')
 const port = process.env.PORT || 3005
 
@@ -69,6 +70,13 @@ app.get('/relacion_especialidad_tamanio_precio_sucursal/:idEspecialidad/:idTaman
 app.post('/relacion_especialidad_tamanio_precio_sucursal', db_retps.insertaRelacionEspecialidadTamanioPrecioSucursal);
 app.put('/relacion_especialidad_tamanio_precio_sucursal/:idEspecialidad/:idTamanio/:idSucursal', db_retps.actualizaRelacionEspecialidadTamanioPrecioSucursal);
 app.delete('/relacion_especialidad_tamanio_precio_sucursal/:idEspecialidad/:idTamanio/:idSucursal', db_retps.eliminaRelacionEspecialidadTamanioPrecioSucursal);
+
+//Endpoints para relacion_producto_precio_sucursal
+app.get('/relacion_producto_precio_sucursal/:idSucursal', db_rpps.getListaRelacionProductoPrecioSucursal);
+app.get('/relacion_producto_precio_sucursal/:idSucursal/:idProducto', db_rpps.getRelacionProductoPrecioSucursal);
+app.post('/relacion_producto_precio_sucursal', db_rpps.insertaRelacionProductoPrecioSucursal);
+app.put('/relacion_producto_precio_sucursal/:idSucursal/:idProducto', db_rpps.actualizaRelacionProductoPrecioSucursal);
+app.delete('/relacion_producto_precio_sucursal/:idSucursal/:idProducto', db_rpps.eliminaRelacionProductoPrecioSucursal);
 
 //Endpoints para lugar
 app.get('/lugares', db_lugar.getListaLugares);
